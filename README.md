@@ -1,42 +1,42 @@
-# sv
+# SEC Chile Dashboard ⚡
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Visualización de datos y análisis de resiliencia del sistema eléctrico chileno (2017-2025). Este proyecto es la capa de presentación y análisis estadístico del ecosistema **SEC Project**.
 
-## Creating a project
+## 🔗 Relación con el ecosistema
+Este repositorio contiene el **frontend y la lógica de visualización**. Se alimenta de los datos procesados por el backend principal:
 
-If you're seeing this, you've probably already done this step. Congrats!
+*   **Proyecto Core (Backend/Scraper)**: [simonkey1/SEC](https://github.com/simonkey1/SEC)
+    *   *Función*: Extracción de datos de la SEC, normalización en PostgreSQL y sincronización con Supabase.
+*   **Este Repositorio (Visualización)**: [simonkey1/dashboard-sec](https://github.com/simonkey1/dashboard-sec)
+    *   *Función*: Dashboard interactivo construido con SvelteKit, Tailwind CSS y LayerChart (D3).
 
-```sh
-# create a new project
-npx sv create my-app
+## 🚀 Características
+*   **Pulse Monitor**: Visualización interactiva de la serie de tiempo nacional.
+*   **Deep Methodology**: Implementación de la metodología "Descripción Densa" para auditar la inversión vs. la realidad de los cortes.
+*   **Mobile Optimized**: Diseño adaptativo robusto usando unidades `dvh` y sticky footer para máxima compatibilidad con navegadores móviles.
+*   **Architecture Hybrid Medallion**: Visualización del pipeline de datos (Bronze -> Silver -> Gold).
+
+## 🛠️ Stack Tecnológico
+*   **Framework**: SvelteKit 5 (Runes).
+*   **Styling**: CSS (Modern HSL variables) + Tailwind CSS.
+*   **Visualización**: Svelte Charting + D3 logic.
+*   **Backend**: Supabase (PostgreSQL).
+
+## 💻 Instalación Local
+
+```powershell
+# Instalar dependencias
+bun install
+
+# Iniciar servidor de desarrollo
+bun dev
 ```
 
-To recreate this project with the same configuration:
+## 📂 Estructura
+*   `/src/lib/components`: Componentes de visualización (Mapas, Graficos de Pulso).
+*   `/src/routes/metodologia`: Página interactiva con el manifesto de investigación.
+*   `/docs`: Documentación detallada, informes técnicos y políticas de base de datos.
+*   `/scripts`: Scripts de verificación de esquema y auditoría de datos.
 
-```sh
-# recreate this project
-bun x sv create --template minimal --types ts --install bun .
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+---
+*Desarrollado como parte de una investigación sobre la calidad del servicio eléctrico en Chile.*

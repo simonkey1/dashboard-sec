@@ -37,7 +37,7 @@ bun dev
 
 ## 📂 Estructura
 *   `/src/lib/components`: Componentes de visualización (Mapas, Graficos de Pulso).
-*   `/src/routes/metodologia`: Página interactiva con el manifesto de investigación.
+*   `/src/routes/research`: Página interactiva con el manifesto de investigación.
 *   `/docs`: Documentación detallada, informes técnicos y políticas de base de datos.
 *   `/scripts`: Scripts de verificación de esquema y auditoría de datos.
 

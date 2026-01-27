@@ -27,9 +27,9 @@
 
 <div class="space-y-4 h-full flex flex-col">
     <div class="flex items-center justify-between">
-        <a href="/metodologia#coquimbo" class="group block">
+        <a href="/research#coquimbo" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-colors flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-all flex items-center gap-2 border-b border-transparent group-hover:border-amber-alert/30 w-fit pb-1"
             >
                 Coquimbo: Impacto Tardío (Lag)
                 <ExternalLink

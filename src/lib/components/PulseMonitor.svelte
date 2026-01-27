@@ -58,9 +58,9 @@
 
 <div class="space-y-4 h-full flex flex-col">
     <div class="flex items-center justify-between">
-        <a href="/metodologia#cronologia" class="group block">
+        <a href="/research#cronologia" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-colors flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all flex items-center gap-2 border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 Tendencia Nacional de Fallas (2017-2025)
                 <ExternalLink
@@ -150,14 +150,15 @@
                 <g
                     transform="translate({(x('2017') || 0) +
                         x.bandwidth() / 2}, {y(5000000)})"
+                    class="pointer-events-none"
                 >
                     <text
                         class="fill-white text-[9px] font-bold uppercase tracking-tight"
                         text-anchor="middle"
-                        y="-25">Nevazón</text
+                        y="-35">Nevazón</text
                     >
-                    <line y1="-20" y2="-12" stroke="white" stroke-width="1.5" />
-                    <circle cy="-12" r="1.5" fill="white" />
+                    <line y1="-30" y2="-22" stroke="white" stroke-width="1.5" />
+                    <circle cy="-22" r="1.5" fill="white" />
                 </g>
 
                 <g

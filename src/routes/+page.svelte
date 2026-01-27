@@ -78,7 +78,7 @@
     <!-- CTAs -->
     <div class="flex flex-col md:grid md:grid-cols-2 gap-6">
         <a
-            href="/metodologia"
+            href="/research"
             class="group w-full p-8 border border-slate-800 rounded-2xl bg-white/5 hover:bg-white/10 transition-all"
         >
             <div

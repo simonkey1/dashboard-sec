@@ -58,9 +58,9 @@
 							: 'hover:text-white'}">Dashboard</a
 					>
 					<a
-						href="/metodologia"
+						href="/research"
 						class="transition-colors {$page.url.pathname ===
-						'/metodologia'
+						'/research'
 							? 'text-emerald-400 font-bold'
 							: 'hover:text-white'}">Investigación</a
 					>
@@ -141,10 +141,9 @@
 							: 'text-slate-300'}">Dashboard</a
 					>
 					<a
-						href="/metodologia"
+						href="/research"
 						onclick={closeMenu}
-						class="py-2 text-xl {$page.url.pathname ===
-						'/metodologia'
+						class="py-2 text-xl {$page.url.pathname === '/research'
 							? 'text-emerald-400 font-bold'
 							: 'text-slate-300'}">Investigación</a
 					>

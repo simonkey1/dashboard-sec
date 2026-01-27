@@ -84,9 +84,9 @@
 
     <!-- Scrollable Timeline / List -->
     <div class="flex flex-col gap-6 w-full md:w-1/2 max-w-sm shrink-0">
-        <a href="/metodologia#cicatrices" class="group block">
+        <a href="/research#cicatrices" class="group block cursor-pointer">
             <h3
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-hover:text-electric-cyan transition-colors flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-hover:text-electric-cyan transition-all flex items-center gap-2 border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 Cicatrices del Sistema (2017-2025)
                 <ExternalLink

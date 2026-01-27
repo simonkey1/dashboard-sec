@@ -51,9 +51,9 @@
 
 <div class="space-y-4 h-full flex flex-col">
     <div class="flex items-center justify-between">
-        <a href="/metodologia#arica" class="group block">
+        <a href="/research#arica" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-colors flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all flex items-center gap-2 border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 Arica: Redundancia Exitosa (REDENOR)
                 <ExternalLink

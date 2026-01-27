@@ -14,7 +14,10 @@ Este repositorio contiene el **frontend y la lógica de visualización**. Se ali
 *   **Pulse Monitor**: Visualización interactiva de la serie de tiempo nacional.
 *   **Deep Methodology**: Implementación de la metodología "Descripción Densa" para auditar la inversión vs. la realidad de los cortes.
 *   **Mobile Optimized**: Diseño adaptativo robusto usando unidades `dvh` y sticky footer para máxima compatibilidad con navegadores móviles.
-*   **Architecture Hybrid Medallion**: Visualización del pipeline de datos (Bronze -> Silver -> Gold).
+*   **Architecture Hybrid Medallion**: Implementación de un pipeline de datos optimizado para manejar volúmenes masivos de información con costos mínimos en la nube.
+    *   **Bronze Layer (Local - Raw)**: ~3.7 GBs de Snapshots JSON crudos extraídos de la SEC.
+    *   **Silver Layer (Local - Clean)**: PostgreSQL local con 6.2M de filas deduplicadas y normalizadas.
+    *   **Gold Layer (Cloud - Business)**: Supabase con métricas pre-calculadas (~10MBs), logrando latencia mínima y ahorro extremo en Request Units.
 
 ## 🛠️ Stack Tecnológico
 *   **Framework**: SvelteKit 5 (Runes).

@@ -8,7 +8,6 @@ Este documento narra la evolución técnica del proyecto, desde un monitor en ti
 3. [Arquitectura Medallón: Del Caos al Oro](#3-arquitectura-medallón-del-caos-al-oro)
 4. [Transparencia de Datos y EDA](#4-transparencia-de-datos-y-eda)
 5. [Metodología de Estimación de Clientes](#5-metodología-de-estimación-de-clientes)
-6. [Especificación de Integración Frontend](#6-especificación-de-integración-frontend)
 
 ---
 
@@ -69,20 +68,9 @@ graph TD
     C -->|Historical Parquet| E[Investigación Académica]
 ```
 
-- **Bronze Layer (Local - Raw)**: Guardamos todo el historial raw en la nube (almacenamiento de bajo costo/gratuito). **Volumen: ~3.7 GBs** de archivos temporales (json snapshots).
-- **Silver Layer (Local - Clean)**: PostgreSQL local donde vive la `fact_interrupciones` deduplicada.
-- **Gold Layer (Cloud - Business)**: Vistas optimizadas y JSONs pre-calculados que se suben a Supabase para alimentar el frontend. Esto nos da "almacenamiento infinito" en términos de análisis, ya que solo mantenemos lo justo y necesario para la visualización activa.
-
-### 3.1 El Puente de Sincronización (The Sync Bridge)
-El script `scripts/etl/sync_dashboard_data.py` es el encargado de materializar la "Capa Gold". Su función es desacoplar el peso del Big Data (Parquet de millones de filas) de la agilidad que requiere el Frontend (JSON livianos).
-
-#### Lógica de Transformación
-1.  **Carga**: Lee el archivo `golden_interrupciones.parquet` usando **Polars** (por velocidad).
-2.  **Agregación**: Genera payloads específicos para cada visualización. Por ejemplo, para el *Market Map*, agrupa por región/empresa y calcula el índice de inestabilidad.
-3.  **Upsert**: Se conecta a Supabase vía API y actualiza la tabla `dashboard_stats` usando el ID del dataset (ej: `market_map`, `eda_quality_stats`).
-
-> **¿Por qué no conectar el Frontend directo a la BD?**
-> Para proteger la base de datos de análisis de consultas masivas concurrentes. Al pre-calcular y servir JSONs estáticos, el dashboard carga en milisegundos sin estresar el motor de datos principal.
+- **Bronze Layer**: Guardamos todo el historial raw en la nube (almacenamiento de bajo costo/gratuito).
+- **Silver Layer**: PostgreSQL local donde vive la `fact_interrupciones` deduplicada.
+- **Gold Layer**: Vistas optimizadas y JSONs pre-calculados que se suben a Supabase para alimentar el frontend. Esto nos da "almacenamiento infinito" en términos de análisis, ya que solo mantenemos lo justo y necesario para la visualización activa.
 
 ---
 
@@ -128,7 +116,7 @@ Para calcular métricas normalizadas (como usuarios afectados por cada 1000 clie
 
 ### B. Numerador: Afectación Instantánea (`GetPorFecha`)
 Es el dato "vivo". Proviene del campo `Clientes` dentro del payload JSON de cada interrupción.
-- **Validación**: Comparamos este valor contra el total regional. Si un evento reporta más afectados que el total de la región (anomalía detectada en &lt; 0.01% de casos), se hace *cap* al total regional.
+- **Validación**: Comparamos este valor contra el total regional. Si un evento reporta más afectados que el total de la región (anomalía detectada en < 0.01% de casos), se hace *cap* al total regional.
 
 ### C. El Algoritmo de "Afectación Neta"
 Un corte de luz no es estático; evoluciona. 
@@ -140,39 +128,3 @@ Nuestra métrica de "Clientes Afectados" para el evento (identificado por `hash_
 
 > [!TIP]
 > Todo el código de esta infraestructura está disponible en `scripts/etl/` y `scripts/analysis/`.
-
----
-
-## 6. Especificación de Integración Frontend
-Este anexo detalla la estructura de datos disponible en Supabase (`dashboard_stats`) para replicar las visualizaciones de esta Crónica.
-
-### 6.1 Transparencia de Datos (Data Quality)
-**ID Payload**: `eda_quality_stats`
-*Datos para la Figura 1: Registros que requirieron imputación.*
-
-```typescript
-interface DataQualityStat {
-  category: string;     // Ej: "Afectados = 0 (Imputado)"
-  count: number;        // Cantidad de registros absolutos
-  percentage: number;   // 0.0 a 1.0 (Ej: 0.05 es 5%)
-}
-```
-**Reglas de Visualización**:
-- **Tipo**: Bar Chart.
-- **Tooltip**: Mostrar absoluto y porcentaje (ej: `0 (0.00%)`).
-- **Contexto**: Explicar que "0" es el resultado ideal.
-
-### 6.2 Distribución de Proyectos (SEIA)
-**ID Payload**: `eda_projects_dist`
-*Datos para la Figura 2: Proyectos de inversión eléctrica por región.*
-
-```typescript
-interface ProjectDistributionItem {
-  nombre_region: string; // Ej: "ANTOFAGASTA", "METROPOLITANA"
-  count: number;         // Cantidad de proyectos
-}
-```
-**Reglas de Visualización**:
-- **Tipo**: Bar Chart Horizontal (para legibilidad de regiones).
-- **Orden**: Descendente por `count`.
-- **Estilo**: Paleta secuencial suave (ej: Blues/Slate).

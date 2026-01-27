@@ -64,7 +64,7 @@
 
         <!-- Fourth Row: Cicatrices (Map) -->
         <div
-            class="md:col-span-12 p-6 glass rounded-2xl border border-white/5 h-auto md:h-[600px]"
+            class="md:col-span-12 p-6 glass rounded-2xl border border-white/5 h-auto"
         >
             <ChileMapAnnotations />
         </div>

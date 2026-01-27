@@ -33,7 +33,7 @@
 </svelte:head>
 
 <div
-	class="dark min-h-dvh bg-slate-950 text-slate-300 font-sans flex flex-col w-full relative"
+	class="dark h-dvh overflow-y-auto overflow-x-hidden bg-slate-950 text-slate-300 font-sans flex flex-col w-full relative scroll-smooth"
 >
 	<header
 		class="border-b border-slate-800 bg-slate-950/90 backdrop-blur-md sticky top-0 left-0 w-full z-[100] transition-all duration-300"

@@ -67,9 +67,9 @@
             '<div id="cronologia" class="scroll-mt-24"></div>\n\n$1',
         );
 
-        // 3. Chile Map (Cicatrices) -> Section 3 Intro or Heatmap
+        // 3. Chile Map (Cicatrices) -> Methodology Explanation (Why we selected)
         processed = processed.replace(
-            /(## 3. Narrativas de la Red \(Resultados\))/,
+            /(En segundo lugar, seleccionamos cuatro estudios de caso)/,
             '<div id="cicatrices" class="scroll-mt-24"></div>\n\n$1',
         );
 

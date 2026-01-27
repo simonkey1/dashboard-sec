@@ -73,7 +73,7 @@ Para resolver los desafíos de costos y escala, implementamos una **Arquitectura
 
 1.  **Bronze Layer (Local - Raw)**:
     *   *Datos*: `Snapshots JSON` crudos del scraper.
-    *   *Volumen*: ~100 GBs de archivos temporales.
+    *   *Volumen*: ~3.7 GBs de archivos temporales.
     *   *Ubicación*: Disco Local (Borde).
 
 2.  **Silver Layer (Local - Clean)**:

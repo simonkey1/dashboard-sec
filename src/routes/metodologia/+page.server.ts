@@ -1,20 +1,11 @@
 import { supabase } from '$lib/supabase';
 import type { PageServerLoad } from './$types';
-import fs from 'fs';
-import path from 'path';
+import paperContent from '$lib/content/research_paper.md?raw';
 
 export const load: PageServerLoad = async () => {
     const { data: stats, error } = await supabase
         .from('dashboard_stats')
         .select('*');
-
-    const paperPath = path.resolve('docs/research_paper.md');
-    let paperContent = '';
-    try {
-        paperContent = fs.readFileSync(paperPath, 'utf-8');
-    } catch (e) {
-        console.error("Could not read research_paper.md", e);
-    }
 
     if (error) {
         console.error('Error fetching methodology stats:', error);

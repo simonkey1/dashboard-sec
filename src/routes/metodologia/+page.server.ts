@@ -8,7 +8,7 @@ export const load: PageServerLoad = async () => {
         .from('dashboard_stats')
         .select('*');
 
-    const paperPath = path.resolve('research_paper.md');
+    const paperPath = path.resolve('docs/research_paper.md');
     let paperContent = '';
     try {
         paperContent = fs.readFileSync(paperPath, 'utf-8');

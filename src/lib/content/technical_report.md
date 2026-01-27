@@ -14,7 +14,7 @@ Este documento narra la evolución técnica del proyecto, desde un monitor en ti
 
 ## 1. El Legado: Arquitectura Real-Time (2017-2024)
 
-Esta sección documenta la arquitectura original de monitoreo continuo, diseñada para operar 24/7 antes del pivote hacia la investigación histórica. Aunque gran parte de este código hoy vive en `scripts/legacy/`, sus patrones de diseño fueron fundamentales para entender la naturaleza del dato.
+Esta sección documenta la arquitectura original de monitoreo continuo, diseñada para operar 24/7 antes del pivote hacia la investigación histórica. Aunque gran parte de este código hoy vive en [`scripts/legacy/`](https://github.com/simonkey1/SEC/tree/master/scripts/legacy), sus patrones de diseño fueron fundamentales para entender la naturaleza del dato.
 
 ### 1.1 Diseño de Alta Disponibilidad & Resiliencia
 El objetivo era mantener un "latido" constante del sistema eléctrico. Para lograrlo en un entorno hostil (bloqueos de IP, timeouts), implementamos patrones de estabilidad robustos.
@@ -44,7 +44,7 @@ Mantuvimos una estricta separación de responsabilidades en las pruebas:
 - **Integración (`tests/integration/`)**: Validacion del flujo completo, incluyendo la conexión a base de datos y la ejecución real del cleanup de archivos.
 
 > [!NOTE]
-> Para detalles de implementación, ver los scripts en `scripts/legacy/` o consultar el [README.md](../README.md) principal.
+> Para detalles de implementación, ver los scripts en [`scripts/legacy/`](https://github.com/simonkey1/SEC/tree/master/scripts/legacy) o consultar el [README.md](https://github.com/simonkey1/SEC/blob/master/README.md) principal.
 
 ---
 
@@ -74,7 +74,7 @@ graph TD
 - **Gold Layer (Cloud - Business)**: Vistas optimizadas y JSONs pre-calculados que se suben a Supabase para alimentar el frontend. Esto nos da "almacenamiento infinito" en términos de análisis, ya que solo mantenemos lo justo y necesario para la visualización activa.
 
 ### 3.1 El Puente de Sincronización (The Sync Bridge)
-El script `scripts/etl/sync_dashboard_data.py` es el encargado de materializar la "Capa Gold". Su función es desacoplar el peso del Big Data (Parquet de millones de filas) de la agilidad que requiere el Frontend (JSON livianos).
+El script [`scripts/etl/sync_dashboard_data.py`](https://github.com/simonkey1/SEC/blob/master/scripts/etl/sync_dashboard_data.py) es el encargado de materializar la "Capa Gold". Su función es desacoplar el peso del Big Data (Parquet de millones de filas) de la agilidad que requiere el Frontend (JSON livianos).
 
 #### Lógica de Transformación
 1.  **Carga**: Lee el archivo `golden_interrupciones.parquet` usando **Polars** (por velocidad).
@@ -139,7 +139,7 @@ Nuestra métrica de "Clientes Afectados" para el evento (identificado por `hash_
 ---
 
 > [!TIP]
-> Todo el código de esta infraestructura está disponible en `scripts/etl/` y `scripts/analysis/`.
+> Todo el código de esta infraestructura está disponible en [`scripts/etl/`](https://github.com/simonkey1/SEC/tree/master/scripts/etl) y [`scripts/analysis/`](https://github.com/simonkey1/SEC/tree/master/scripts/analysis).
 
 ---
 

@@ -35,7 +35,7 @@
     const x = $derived(
         scaleBand()
             .domain(chartData.map((d) => d.year.toString()))
-            .range([padding.left, 1000 - padding.right])
+            .range([padding.left + 20, 1000 - padding.right - 20])
             .padding(0.15),
     );
 
@@ -53,12 +53,12 @@
     <div class="flex items-center justify-between">
         <a href="/research#arica" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all flex items-center gap-2 border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 Arica: Redundancia Exitosa (REDENOR)
                 <ExternalLink
                     size={10}
-                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                    class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h2>
         </a>
@@ -115,13 +115,13 @@
                         role="graphics-symbol"
                         aria-label="Barra de datos para el año {d.year} con un valor de {d.value}"
                     />
-                    <!-- Chart Labels (Inside Bars) -->
-                    {#if d.value > 100}
+                    <!-- Chart Labels (Selective: Max, 2020, 2025) -->
+                    {#if d.year === 2020 || d.year === 2025 || d.value === Math.max(...chartData.map((d) => d.value))}
                         <text
                             x={(x(d.year.toString()) || 0) + x.bandwidth() / 2}
                             y={y(d.value) + 15}
                             text-anchor="middle"
-                            class="fill-black text-[11px] font-black font-sans tracking-tighter"
+                            class="fill-black text-[24px] md:text-[14px] font-bold font-sans tracking-tighter"
                             style="pointer-events: none;"
                         >
                             {d.value.toLocaleString()}
@@ -132,7 +132,7 @@
                         x={(x(d.year.toString()) || 0) + x.bandwidth() / 2}
                         y={height - 5}
                         text-anchor="middle"
-                        class="fill-slate-300 text-[10px] font-mono font-bold"
+                        class="fill-slate-300 text-[24px] md:text-[12px] font-mono font-bold"
                     >
                         {d.year}
                     </text>

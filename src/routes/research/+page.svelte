@@ -129,7 +129,7 @@ Valores estimados: 2017 (~16.2), 2024 (Pico por viento). <strong class="text-ros
 </script>
 
 <div
-    class="max-w-4xl mx-auto prose prose-invert prose-emerald p-12 glass rounded-3xl border border-white/5 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700"
+    class="max-w-4xl mx-auto prose prose-invert prose-emerald p-4 md:p-12 glass rounded-3xl border border-white/5 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 break-words overflow-x-hidden"
 >
     {#if sections().length > 0}
         <!-- Section 1: Intro up to Fig 1 -->
@@ -148,7 +148,7 @@ Valores estimados: 2017 (~16.2), 2024 (Pico por viento). <strong class="text-ros
 
             <!-- Fig 2 -->
             <div
-                class="not-prose my-12 p-8 bg-black/60 rounded-2xl border border-white/10 h-[850px]"
+                class="not-prose my-12 p-4 md:p-8 bg-black/60 rounded-2xl border border-white/10 h-auto md:h-[850px]"
             >
                 <ChileMapAnnotations />
             </div>

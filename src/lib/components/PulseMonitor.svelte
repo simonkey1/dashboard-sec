@@ -42,7 +42,7 @@
     const x = $derived(
         scaleBand()
             .domain(chartData.map((d) => d.year))
-            .range([padding.left, 1000 - padding.right]) // Using 1000 as base width for viewBox
+            .range([padding.left + 20, 1000 - padding.right - 20]) // Increased side padding
             .padding(0.15),
     );
 
@@ -60,12 +60,12 @@
     <div class="flex items-center justify-between">
         <a href="/research#cronologia" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all flex items-center gap-2 border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 Tendencia Nacional de Fallas (2017-2025)
                 <ExternalLink
                     size={10}
-                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                    class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h2>
         </a>
@@ -78,7 +78,7 @@
 
     <!-- Manual SVG Implementation -->
     <div
-        class="flex-1 min-h-[250px] relative rounded-xl bg-rich-black p-4 group"
+        class="flex-1 min-h-[250px] relative rounded-xl bg-rich-black p-2 md:p-4 group"
     >
         {#if chartData.length > 0}
             <svg
@@ -123,13 +123,13 @@
                         role="graphics-symbol"
                         aria-label="Barra de datos para el año {d.year} con un valor de {d.value}"
                     />
-                    <!-- Chart Labels (Inside Bars) -->
-                    {#if d.value > 1000000}
+                    <!-- Chart Labels (Selective: Max, 2017, 2024, 2025) -->
+                    {#if d.year === "2017" || d.year === "2024" || d.year === "2025" || d.value === Math.max(...chartData.map((d) => d.value))}
                         <text
                             x={(x(d.year) || 0) + x.bandwidth() / 2}
                             y={y(d.value) + 20}
                             text-anchor="middle"
-                            class="fill-black text-[12px] font-black font-sans tracking-tighter"
+                            class="fill-black text-[24px] md:text-[14px] font-bold font-sans tracking-tighter"
                             style="pointer-events: none;"
                         >
                             {i18nText(d.value)}
@@ -141,7 +141,7 @@
                         x={(x(d.year) || 0) + x.bandwidth() / 2}
                         y={height - 5}
                         text-anchor="middle"
-                        class="fill-slate-400 text-[11px] font-mono font-bold"
+                        class="fill-slate-400 text-[24px] md:text-[13px] font-mono font-bold"
                     >
                         {d.year}
                     </text>

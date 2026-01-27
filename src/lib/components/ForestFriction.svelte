@@ -29,12 +29,12 @@
     <div class="flex items-center justify-between">
         <a href="/research#muro-verde" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-emerald-400 transition-all flex items-center gap-2 border-b border-transparent group-hover:border-emerald-400/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-emerald-400 transition-all block border-b border-transparent group-hover:border-emerald-400/30 w-fit pb-1"
             >
                 Fricción Forestal: Impacto en Redes del Sur
                 <ExternalLink
                     size={10}
-                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                    class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h2>
         </a>

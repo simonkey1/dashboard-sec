@@ -61,13 +61,14 @@
     class="flex flex-col md:flex-row h-auto md:h-full gap-8 md:gap-16 items-center justify-center p-4"
 >
     <!-- Interactive Map -->
+    <!-- Interactive Map -->
     <!-- Interactive Map with Ovoid Container -->
     <div
-        class="w-full h-[400px] md:h-full md:w-1/2 relative flex items-center justify-center shrink-0"
+        class="w-full h-[300px] md:h-full md:w-1/2 relative flex items-center justify-center shrink-0"
     >
         <!-- Ovoid Shape Container -->
         <div
-            class="relative h-full aspect-1/3 md:aspect-1/3 rounded-full flex items-center justify-center py-8 md:py-12"
+            class="relative h-full aspect-1/3 md:aspect-1/3 rounded-full flex items-center justify-center py-4 md:py-12"
         >
             <ChileMapSvg
                 {activeRegion}
@@ -86,12 +87,12 @@
     <div class="flex flex-col gap-6 w-full md:w-1/2 max-w-sm shrink-0">
         <a href="/research#cicatrices" class="group block cursor-pointer">
             <h3
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-hover:text-electric-cyan transition-all flex items-center gap-2 border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 Cicatrices del Sistema (2017-2025)
                 <ExternalLink
                     size={10}
-                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                    class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h3>
         </a>

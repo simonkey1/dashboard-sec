@@ -145,12 +145,12 @@ El dato nos dice *qué* pasó. La respuesta sobre *qué hacer* no está en el Ex
 ---
 
 ## 6. Referencias Seleccionadas
-*   Geertz, C. (1973). *The Interpretation of Cultures*.
-*   Hollnagel, E. (2014). *Resilience Engineering in Practice*.
-*   Ministerio de Energía. (2019). *Plan de Descarbonización: Acuerdo de retiro de centrales a carbón*.
-*   Comisión Nacional de Energía (CNE). (2020). *Informe Técnico Definitivo: Fijación de Precios de Nudo Promedio*.
-*   Sovacool, B. & Dworkin, M. (2015). *Energy Justice: Conceptual Insights*.
-*   OLADE (2022). *Informe de Calidad de Servicio Eléctrico en LatAm*.
+*   Geertz, C. (1973). *[The Interpretation of Cultures](https://books.google.cl/books/about/The_Interpretation_of_Cultures.html?id=br6X2wT5eXQC)*.
+*   Hollnagel, E. (2014). *[Resilience Engineering in Practice](https://www.ashgate.com/pdf/SamplePages/Resilience_Engineering_in_Practice_Intro.pdf)*.
+*   Ministerio de Energía. (2019). *[Plan de Descarbonización: Acuerdo de retiro de centrales a carbón](https://energia.gob.cl/sites/default/files/plan_de_descarbonizacion_de_la_matriz_energetica_0.pdf)*.
+*   Comisión Nacional de Energía (CNE). (2020). *[Informe Técnico Definitivo: Fijación de Precios de Nudo Promedio](https://www.cne.cl/normativas/electrica/fijacion-de-precios/precio-de-nudo-promedio/)*.
+*   Sovacool, B. & Dworkin, M. (2015). *[Energy Justice: Conceptual Insights](https://www.researchgate.net/publication/273136273_Energy_Justice_Conceptual_Insights)*.
+*   OLADE (2022). *[Informe de Calidad de Servicio Eléctrico en LatAm](https://www.olade.org/publicaciones/)*.
 
 ---
 

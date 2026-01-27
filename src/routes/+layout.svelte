@@ -32,9 +32,11 @@
 	/>
 </svelte:head>
 
-<div class="dark min-h-dvh bg-slate-950 text-slate-300 font-sans flex flex-col">
+<div
+	class="dark min-h-dvh bg-slate-950 text-slate-300 font-sans flex flex-col w-full relative"
+>
 	<header
-		class="border-b border-slate-800 bg-slate-950/50 backdrop-blur-md sticky top-0 z-50 transition-all duration-300"
+		class="border-b border-slate-800 bg-slate-950/90 backdrop-blur-md sticky top-0 left-0 w-full z-[100] transition-all duration-300"
 	>
 		<div
 			class="container mx-auto px-4 h-16 flex items-center justify-between"

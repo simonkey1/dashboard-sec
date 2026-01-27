@@ -1,5 +1,6 @@
 <script lang="ts">
     import ChileMapSvg from "$lib/components/ChileMapSvg.svelte";
+    import { ExternalLink } from "lucide-svelte";
 
     type FailurePoint = {
         id: string;
@@ -88,10 +89,10 @@
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-hover:text-electric-cyan transition-colors flex items-center gap-2"
             >
                 Cicatrices del Sistema (2017-2025)
-                <span
-                    class="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >→</span
-                >
+                <ExternalLink
+                    size={10}
+                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                />
             </h3>
         </a>
 

@@ -10,6 +10,7 @@
     import type { TimeSeriesData } from "$lib/types";
     import { scaleBand, scaleLinear } from "d3-scale";
     import { max } from "d3-array";
+    import { ExternalLink } from "lucide-svelte";
 
     let { data = [] }: { data: TimeSeriesData[] } = $props();
     let hoveredData = $state<{ year: string; value: number } | null>(null);
@@ -62,10 +63,10 @@
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-colors flex items-center gap-2"
             >
                 Tendencia Nacional de Fallas (2017-2025)
-                <span
-                    class="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >→</span
-                >
+                <ExternalLink
+                    size={10}
+                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                />
             </h2>
         </a>
         <div class="flex items-center gap-2">
@@ -155,7 +156,8 @@
                         text-anchor="middle"
                         y="-25">Nevazón</text
                     >
-                    <line y1="-20" y2="0" stroke="white" stroke-width="1" />
+                    <line y1="-20" y2="-12" stroke="white" stroke-width="1.5" />
+                    <circle cy="-12" r="1.5" fill="white" />
                 </g>
 
                 <g
@@ -167,7 +169,8 @@
                         text-anchor="middle"
                         y="-25">Viento</text
                     >
-                    <line y1="-20" y2="0" stroke="white" stroke-width="1" />
+                    <line y1="-20" y2="-12" stroke="white" stroke-width="1.5" />
+                    <circle cy="-12" r="1.5" fill="white" />
                 </g>
             </svg>
 

@@ -12,6 +12,7 @@
     import { curveMonotoneX } from "d3-shape";
     import { format } from "date-fns";
     import { es } from "date-fns/locale";
+    import { ExternalLink } from "lucide-svelte";
     import type { TimeSeriesData } from "$lib/types";
 
     let { data = [] }: { data: TimeSeriesData[] } = $props();
@@ -31,10 +32,10 @@
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-colors flex items-center gap-2"
             >
                 Coquimbo: Impacto Tardío (Lag)
-                <span
-                    class="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >→</span
-                >
+                <ExternalLink
+                    size={10}
+                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                />
             </h2>
         </a>
         <div class="flex items-center gap-2 group relative">

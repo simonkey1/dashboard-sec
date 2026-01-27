@@ -1,9 +1,8 @@
 <script lang="ts">
-    import type { InvestmentROIData } from "$lib/types";
-    import { Chart, Svg, Axis, Bar, Tooltip } from "layerchart";
-    import { scaleBand, scaleLinear } from "d3-scale";
+    import { ExternalLink } from "lucide-svelte";
+    import type { InvestmentRoiData } from "$lib/types";
 
-    let { data = [] }: { data: InvestmentROIData[] } = $props();
+    let { data = [] }: { data: InvestmentRoiData[] } = $props();
 
     // Sort by descendants
     const chartData = $derived(
@@ -20,10 +19,10 @@
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-colors flex items-center gap-2"
             >
                 Muro de Ineficiencia (Social ROI)
-                <span
-                    class="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >→</span
-                >
+                <ExternalLink
+                    size={10}
+                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                />
             </h2>
         </a>
         <span
@@ -55,13 +54,31 @@
                                 class="h-full bg-electric-cyan opacity-60 group-hover:opacity-100 transition-all duration-500 rounded-sm relative"
                                 style="width: {(d.efficiency_ratio / maxRatio) *
                                     100}%"
+                            ></div>
+                            <span
+                                class="absolute top-1/2 -translate-y-1/2 text-[9px] font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap"
+                                style="
+                                    left: {(d.efficiency_ratio / maxRatio) *
+                                    100 >
+                                20
+                                    ? 'auto'
+                                    : 'calc(' +
+                                      (d.efficiency_ratio / maxRatio) * 100 +
+                                      '% + 8px)'};
+                                    right: {(d.efficiency_ratio / maxRatio) *
+                                    100 >
+                                20
+                                    ? '8px'
+                                    : 'auto'};
+                                    color: {(d.efficiency_ratio / maxRatio) *
+                                    100 >
+                                20
+                                    ? '#000'
+                                    : '#cbd5e1'};
+                                "
                             >
-                                <span
-                                    class="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] text-black font-bold opacity-0 group-hover:opacity-100 transition-opacity"
-                                >
-                                    {d.efficiency_ratio.toFixed(1)}
-                                </span>
-                            </div>
+                                {d.efficiency_ratio.toFixed(1)}
+                            </span>
                         </div>
                     </div>
                 {/each}

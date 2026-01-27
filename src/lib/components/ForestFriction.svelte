@@ -1,5 +1,6 @@
 <script lang="ts">
     import { cn } from "$lib/utils";
+    import { ExternalLink } from "lucide-svelte";
     import type { CompanyRankingData } from "$lib/types";
 
     let { data = [] }: { data: CompanyRankingData[] } = $props();
@@ -31,10 +32,10 @@
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-emerald-400 transition-colors flex items-center gap-2"
             >
                 Fricción Forestal: Impacto en Redes del Sur
-                <span
-                    class="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >→</span
-                >
+                <ExternalLink
+                    size={10}
+                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                />
             </h2>
         </a>
         <div class="flex items-center gap-1">

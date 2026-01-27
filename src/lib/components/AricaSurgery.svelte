@@ -1,6 +1,7 @@
 <script lang="ts">
     import { scaleBand, scaleLinear } from "d3-scale";
     import { max } from "d3-array";
+    import { ExternalLink } from "lucide-svelte";
     import type { TimeSeriesData } from "$lib/types";
 
     let { data = [] }: { data: TimeSeriesData[] } = $props();
@@ -55,10 +56,10 @@
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-colors flex items-center gap-2"
             >
                 Arica: Redundancia Exitosa (REDENOR)
-                <span
-                    class="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >→</span
-                >
+                <ExternalLink
+                    size={10}
+                    class="opacity-40 group-hover:opacity-100 transition-opacity"
+                />
             </h2>
         </a>
         <div class="flex items-center gap-2">

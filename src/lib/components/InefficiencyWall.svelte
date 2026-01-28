@@ -2,6 +2,8 @@
     import { ExternalLink } from "lucide-svelte";
     import type { InvestmentRoiData } from "$lib/types";
 
+    import { language, t } from "$lib/stores/language";
+
     let { data = [] }: { data: InvestmentRoiData[] } = $props();
 
     // Sort by descendants
@@ -18,17 +20,23 @@
             <h2
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-all block border-b border-transparent group-hover:border-amber-alert/30 w-fit pb-1"
             >
-                Muro de Ineficiencia (Social ROI)
+                {t($language, "chart.roi.title")}
                 <ExternalLink
                     size={10}
                     class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h2>
         </a>
-        <span
-            class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded"
-            >Clientes / M$ USD</span
-        >
+        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+            {t($language, "chart.roi.desc")}
+        </p>
+        <div class="flex flex-col items-end">
+            <span
+                class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded cursor-help"
+                title={t($language, "chart.roi.desc")}
+                >{t($language, "chart.roi.unit")}</span
+            >
+        </div>
     </div>
 
     <div
@@ -87,7 +95,7 @@
             <div
                 class="h-full flex items-center justify-center text-slate-600 text-xs italic"
             >
-                Calculando ROI Social...
+                {t($language, "common.loading")}
             </div>
         {/if}
     </div>

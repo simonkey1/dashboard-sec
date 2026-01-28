@@ -11,9 +11,10 @@
     import { scaleTime, scaleLinear } from "d3-scale";
     import { curveMonotoneX } from "d3-shape";
     import { format } from "date-fns";
-    import { es } from "date-fns/locale";
+    import { es as localeEs, enUS as localeEn } from "date-fns/locale";
     import { ExternalLink } from "lucide-svelte";
     import type { TimeSeriesData } from "$lib/types";
+    import { language, t } from "$lib/stores/language";
 
     let { data = [] }: { data: TimeSeriesData[] } = $props();
 
@@ -23,6 +24,17 @@
             value: d.afectados,
         })),
     );
+
+    let isMobile = $state(false);
+
+    $effect(() => {
+        const checkMobile = () => {
+            isMobile = window.innerWidth < 768;
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    });
 </script>
 
 <div class="space-y-4 h-full flex flex-col">
@@ -31,13 +43,16 @@
             <h2
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-all block border-b border-transparent group-hover:border-amber-alert/30 w-fit pb-1"
             >
-                Coquimbo: Impacto Tardío (Lag)
+                {t($language, "chart.coquimbo.title")}
                 <ExternalLink
                     size={10}
                     class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h2>
         </a>
+        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+            {t($language, "chart.coquimbo.desc")}
+        </p>
         <div class="flex items-center gap-2 group relative">
             <span class="w-2 h-2 rounded-full bg-amber-alert"></span>
             <span
@@ -49,10 +64,10 @@
                 class="absolute right-0 top-6 w-64 bg-slate-900 border border-slate-700 p-3 rounded-lg z-50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto shadow-xl"
             >
                 <p class="text-[10px] text-slate-300 leading-relaxed">
-                    <strong class="text-amber-alert">Debate:</strong> ¿Es "Lag" (tiempo
-                    de adaptación normal) o "Ineficiencia Logística"? El gráfico
-                    muestra que el impacto positivo tardó años en materializarse,
-                    sugiriendo complejidad en la coordinación transmisión-distribución.
+                    <strong class="text-amber-alert"
+                        >{t($language, "chart.debate")}:</strong
+                    >
+                    {t($language, "chart.debate.desc")}
                 </p>
             </div>
         </div>
@@ -99,13 +114,13 @@
                     <Axis
                         placement="left"
                         grid={{ class: "stroke-white/5" }}
-                        ticks={5}
+                        ticks={isMobile ? 3 : 5}
                         class="text-[10px] font-mono fill-white opacity-80"
                     />
                     <Axis
                         placement="bottom"
                         grid={{ class: "stroke-white/5" }}
-                        ticks={5}
+                        ticks={isMobile ? 3 : 5}
                         format={(d: Date) => format(d, "yyyy")}
                         class="text-[10px] font-mono fill-white opacity-80"
                     />
@@ -229,7 +244,10 @@
                         <div
                             class="text-slate-400 text-[9px] font-mono uppercase mb-1"
                         >
-                            {format(data.date, "MMMM yyyy", { locale: es })}
+                            {format(data.date, "MMMM yyyy", {
+                                locale:
+                                    $language === "es" ? localeEs : localeEn,
+                            })}
                         </div>
                         <div class="text-white font-mono text-xl font-bold">
                             {(data.value ?? 0).toLocaleString()}
@@ -248,7 +266,7 @@
                 <div
                     class="w-8 h-8 border-2 border-amber-alert border-t-transparent rounded-full animate-spin"
                 ></div>
-                <span>Sincronizando Lag (COQUIMBO)...</span>
+                <span>{t($language, "common.loading")} (COQUIMBO)...</span>
             </div>
         {/if}
     </div>

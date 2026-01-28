@@ -11,9 +11,20 @@
     import { scaleBand, scaleLinear } from "d3-scale";
     import { max } from "d3-array";
     import { ExternalLink } from "lucide-svelte";
+    import { language, t } from "$lib/stores/language";
 
     let { data = [] }: { data: TimeSeriesData[] } = $props();
     let hoveredData = $state<{ year: string; value: number } | null>(null);
+    let isMobile = $state(false);
+
+    $effect(() => {
+        const checkMobile = () => {
+            isMobile = window.innerWidth < 768;
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    });
 
     // Aggregate by Year
     const chartData = $derived(
@@ -35,25 +46,38 @@
     );
 
     // Dimensions
-    const height = 250;
-    const padding = { top: 20, right: 10, bottom: 30, left: 40 };
+    const height = $derived(isMobile ? 200 : 250);
+    const padding = $derived(
+        isMobile
+            ? { top: 10, right: 5, bottom: 25, left: 35 }
+            : { top: 20, right: 10, bottom: 30, left: 45 },
+    );
 
     // Scales
     const x = $derived(
         scaleBand()
             .domain(chartData.map((d) => d.year))
-            .range([padding.left + 20, 1000 - padding.right - 20]) // Increased side padding
+            .range([padding.left, 1000 - padding.right])
             .padding(0.15),
     );
 
     const y = $derived(
         scaleLinear()
-            .domain([0, max(chartData, (d) => d.value) || 0])
+            .domain([0, (max(chartData, (d) => d.value) || 0) * 1.1]) // Add 10% headroom
             .range([height - padding.bottom, padding.top]),
     );
 
-    const xTicks = $derived(x.domain());
-    const yTicks = $derived(y.ticks(5));
+    const xTicks = $derived(
+        isMobile
+            ? chartData
+                  .filter(
+                      (_, i) =>
+                          i === 0 || i === chartData.length - 1 || i % 2 === 0,
+                  )
+                  .map((d) => d.year)
+            : chartData.map((d) => d.year),
+    );
+    const yTicks = $derived(y.ticks(isMobile ? 3 : 5));
 </script>
 
 <div class="space-y-4 h-full flex flex-col">
@@ -62,16 +86,19 @@
             <h2
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
-                Tendencia Nacional de Fallas (2017-2025)
+                {t($language, "card.time_series")} (2017-2025)
                 <ExternalLink
                     size={10}
                     class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h2>
         </a>
+        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+            {t($language, "chart.monitor.desc")}
+        </p>
         <div class="flex items-center gap-2">
             <span class="text-[10px] text-slate-500 uppercase tracking-tighter"
-                >Serie Histórica Validada</span
+                >{t($language, "chart.badge.validated")}</span
             >
         </div>
     </div>
@@ -107,7 +134,6 @@
                 {/each}
 
                 <!-- Bars -->
-                <!-- Bars -->
                 {#each chartData as d}
                     <!-- svelte-ignore a11y_mouse_events_have_key_events -->
                     <rect
@@ -123,28 +149,31 @@
                         role="graphics-symbol"
                         aria-label="Barra de datos para el año {d.year} con un valor de {d.value}"
                     />
-                    <!-- Chart Labels (Selective: Max, 2017, 2024, 2025) -->
-                    {#if d.year === "2017" || d.year === "2024" || d.year === "2025" || d.value === Math.max(...chartData.map((d) => d.value))}
+
+                    <!-- Chart Labels: Show only on Desktop or if hovered -->
+                    {#if !isMobile && (d.year === "2017" || d.year === "2024" || d.year === "2025" || d.value === Math.max(...chartData.map((d) => d.value)))}
                         <text
                             x={(x(d.year) || 0) + x.bandwidth() / 2}
-                            y={y(d.value) + 20}
+                            y={y(d.value) - 8}
                             text-anchor="middle"
-                            class="fill-black text-[24px] md:text-[14px] font-bold font-sans tracking-tighter"
+                            class="fill-white text-[12px] font-bold font-sans tracking-tight"
                             style="pointer-events: none;"
                         >
                             {i18nText(d.value)}
                         </text>
                     {/if}
 
-                    <!-- X Axis Label -->
-                    <text
-                        x={(x(d.year) || 0) + x.bandwidth() / 2}
-                        y={height - 5}
-                        text-anchor="middle"
-                        class="fill-slate-400 text-[24px] md:text-[13px] font-mono font-bold"
-                    >
-                        {d.year}
-                    </text>
+                    <!-- X Axis Label: Use filtered ticks -->
+                    {#if xTicks.includes(d.year)}
+                        <text
+                            x={(x(d.year) || 0) + x.bandwidth() / 2}
+                            y={height - 5}
+                            text-anchor="middle"
+                            class="fill-slate-400 text-[11px] font-mono font-bold"
+                        >
+                            {d.year}
+                        </text>
+                    {/if}
                 {/each}
                 <!-- Annotations -->
                 <g
@@ -155,7 +184,7 @@
                     <text
                         class="fill-white text-[9px] font-bold uppercase tracking-tight"
                         text-anchor="middle"
-                        y="-35">Nevazón</text
+                        y="-35">{t($language, "chart.annotations.snow")}</text
                     >
                     <line y1="-30" y2="-22" stroke="white" stroke-width="1.5" />
                     <circle cy="-22" r="1.5" fill="white" />
@@ -168,7 +197,7 @@
                     <text
                         class="fill-white text-[9px] font-bold uppercase tracking-tight"
                         text-anchor="middle"
-                        y="-25">Viento</text
+                        y="-25">{t($language, "chart.annotations.wind")}</text
                     >
                     <line y1="-20" y2="-12" stroke="white" stroke-width="1.5" />
                     <circle cy="-12" r="1.5" fill="white" />
@@ -183,14 +212,15 @@
                     <div
                         class="text-slate-400 text-[10px] font-mono uppercase mb-1"
                     >
-                        Año {hoveredData.year}
+                        {t($language, "chart.tooltip.year")}
+                        {hoveredData.year}
                     </div>
                     <div
                         class="text-electric-cyan font-mono text-xl font-black"
                     >
                         {hoveredData.value.toLocaleString()}
                         <span class="text-[10px] text-white/50 font-normal ml-1"
-                            >afectados</span
+                            >{t($language, "chart.tooltip.affected")}</span
                         >
                     </div>
                 </div>
@@ -199,7 +229,8 @@
             <div
                 class="h-full flex items-center justify-center text-slate-600 text-xs italic"
             >
-                <span>Cargando trazado... (Datos recibidos: {data.length})</span
+                <span
+                    >{t($language, "chart.loading")} (Data: {data.length})</span
                 >
             </div>
         {/if}

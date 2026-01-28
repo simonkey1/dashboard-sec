@@ -97,7 +97,7 @@ Este pre-procesamiento estricto explica la limpieza del dataset: **las reglas de
 ### 4.2 El Cruce con Proyectos (SEIA)
 Para validar si la inversión ayuda a la fiabilidad, cruzamos los datos de cortes con la base de proyectos del SEIA relacionados con electricidad.
 
-![Distribución Proyectos](figures/eda_projects_dist.png)
+![Distribución Proyectos](/eda_projects_dist.png)
 *Figura 2: Distribución de proyectos de inversión eléctrica analizados para el estudio.*
 
 > [!NOTE]

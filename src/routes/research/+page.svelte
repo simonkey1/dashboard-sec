@@ -6,16 +6,24 @@
     import ForestFriction from "$lib/components/ForestFriction.svelte";
     import ChileMapAnnotations from "$lib/components/ChileMapAnnotations.svelte";
 
+    import { language } from "$lib/stores/language";
+
     let { data } = $props();
     const stats = $derived(data.stats ?? {});
 
     // We split the content into static sections to interleave components manually
     // This is safer than using a custom renderer which might have Svelte 5 compatibility issues
-    const fullContent = $derived(data.paperContent || "");
+    const fullContent = $derived(
+        $language === "en"
+            ? data.paperContentEn || ""
+            : data.paperContentEs || "",
+    );
 
     // Split points based on figure placeholders
     const sections = $derived(() => {
-        const parts = fullContent.split(/!\[Figura \d+: .*\]\(.*\)/g);
+        const parts = fullContent.split(
+            /!\[(?:Figura|Figure) \d+: .*\]\(.*\)/g,
+        );
         return parts;
     });
 
@@ -92,7 +100,7 @@
         );
 
         // Fix LaTeX Formula - Robust String Replacement using explicit placeholder
-        const formulaComponent = `<div class="bg-electric-cyan/5 border-l-4 border-electric-cyan p-6 my-8 rounded-r-lg shadow-lg">
+        const formulaContentEs = `<div class="bg-electric-cyan/5 border-l-4 border-electric-cyan p-6 my-8 rounded-r-lg shadow-lg">
 <h3 class="text-electric-cyan font-bold text-lg mb-4 flex items-center gap-2">
 💡 Caja de Conceptos: ¿Qué medimos cuando medimos cortes?
 </h3>
@@ -116,6 +124,33 @@ Valores estimados: 2017 (~16.2), 2024 (Pico por viento). <strong class="text-ros
 </p>
 </div>`;
 
+        const formulaContentEn = `<div class="bg-electric-cyan/5 border-l-4 border-electric-cyan p-6 my-8 rounded-r-lg shadow-lg">
+<h3 class="text-electric-cyan font-bold text-lg mb-4 flex items-center gap-2">
+💡 Concept Box: What do we measure when wait measure outages?
+</h3>
+<ul class="list-disc pl-5 space-y-2 text-slate-300 mb-6 text-sm">
+<li><strong class="text-white">Official SAIFI:</strong> Filters out "Force Majeure Events" (weather). It's like measuring fever while ignoring the flu. <em class="text-slate-500">Average: ~3.5-4.5.</em></li>
+<li><strong class="text-white">Raw SAIFI (Our Indicator):</strong> Considers <em class="text-white">all</em> interruptions.</li>
+</ul>
+<div class="my-6 p-6 bg-slate-900 rounded-xl border border-white/10 text-center font-mono relative overflow-hidden group">
+<div class="absolute inset-0 bg-electric-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="inline-flex items-center gap-4 text-base md:text-lg relative z-10">
+<span class="text-rose-500 font-bold">Raw SAIFI</span>
+<span class="text-slate-500">=</span>
+<div class="flex flex-col items-center">
+<span class="border-b border-slate-500 px-4 pb-1 text-white">∑ Affected Customers (Total)</span>
+<span class="pt-1 text-slate-400 text-xs">Total Customers (6.5M)</span>
+</div>
+</div>
+</div>
+<p class="text-xs text-slate-400 italic text-center">
+Estimated values: 2017 (~16.2), 2024 (Windstorm Peak). <strong class="text-rose-500">The gap is nearly 4x.</strong>
+</p>
+</div>`;
+
+        const formulaComponent =
+            $language === "en" ? formulaContentEn : formulaContentEs;
+
         processed = processed.replace(
             /<!-- COMPONENT: CONCEPT_BOX -->/g,
             formulaComponent,
@@ -129,7 +164,7 @@ Valores estimados: 2017 (~16.2), 2024 (Pico por viento). <strong class="text-ros
 </script>
 
 <div
-    class="max-w-4xl mx-auto prose prose-invert prose-emerald p-4 md:p-12 glass rounded-3xl border border-white/5 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 break-words overflow-x-hidden"
+    class="max-w-4xl mx-auto prose prose-invert prose-emerald p-4 md:p-12 glass rounded-3xl border border-white/5 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 wrap-break-word overflow-x-hidden"
 >
     {#if sections().length > 0}
         <!-- Section 1: Intro up to Fig 1 -->

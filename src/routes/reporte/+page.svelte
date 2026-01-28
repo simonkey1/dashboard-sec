@@ -3,9 +3,17 @@
     import EnergyProjectsDist from "$lib/components/EnergyProjectsDist.svelte";
     import MermaidDiagram from "$lib/components/MermaidDiagram.svelte";
 
+    import { language } from "$lib/stores/language";
+
     let { data } = $props();
     const stats = $derived(data.stats ?? {});
-    const fullContent = $derived(data.reportContent || "");
+
+    // Select content based on language store
+    const fullContent = $derived(
+        $language === "en"
+            ? data.reportContentEn || ""
+            : data.reportContentEs || "",
+    );
 
     // Process markdown for custom syntax before splitting
     function processMarkdown(text: string) {
@@ -72,9 +80,10 @@
         const postMermaidRaw = mermaidSplit[2];
 
         // Now split post-mermaid content by Project Distribution Figure
-        // Pattern: ![Distribución Proyectos](figures/eda_projects_dist.png)
+        // Pattern: ![Distribución Proyectos](figures/eda_projects_dist.png) OR ![Project Distribution](/eda_projects_dist.png)
+        // We match broadly on the filename to be safe
         const projectVisSplit = postMermaidRaw.split(
-            /!\[Distribución Proyectos\]\(figures\/eda_projects_dist\.png\)/,
+            /!\[.*\]\(.*eda_projects_dist\.png\)/,
         );
 
         const finalSections = [

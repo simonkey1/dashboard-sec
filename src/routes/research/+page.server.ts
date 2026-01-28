@@ -1,6 +1,7 @@
 import { supabase } from '$lib/supabase';
 import type { PageServerLoad } from './$types';
-import paperContent from '$lib/content/research_paper.md?raw';
+import paperContentEs from '$lib/content/research_paper.md?raw';
+import paperContentEn from '$lib/content/research_paper.en.md?raw';
 
 export const load: PageServerLoad = async () => {
     const { data: stats, error } = await supabase
@@ -9,7 +10,7 @@ export const load: PageServerLoad = async () => {
 
     if (error) {
         console.error('Error fetching methodology stats:', error);
-        return { stats: {}, paperContent };
+        return { stats: {}, paperContentEs, paperContentEn };
     }
 
     const statsMap = (stats || []).reduce((acc, curr) => {
@@ -19,6 +20,7 @@ export const load: PageServerLoad = async () => {
 
     return {
         stats: statsMap,
-        paperContent
+        paperContentEs,
+        paperContentEn
     };
 };

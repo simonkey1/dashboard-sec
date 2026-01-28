@@ -2,6 +2,7 @@
     import { cn } from "$lib/utils";
     import { ExternalLink } from "lucide-svelte";
     import type { CompanyRankingData } from "$lib/types";
+    import { language, t } from "$lib/stores/language";
 
     let { data = [] }: { data: CompanyRankingData[] } = $props();
 
@@ -31,17 +32,20 @@
             <h2
                 class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-emerald-400 transition-all block border-b border-transparent group-hover:border-emerald-400/30 w-fit pb-1"
             >
-                Fricción Forestal: Impacto en Redes del Sur
+                {t($language, "chart.friction.title")}
                 <ExternalLink
                     size={10}
                     class="opacity-40 group-hover:opacity-100 transition-opacity inline-block ml-1 align-baseline"
                 />
             </h2>
         </a>
+        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+            {t($language, "chart.friction.desc")}
+        </p>
         <div class="flex items-center gap-1">
             <div class="w-2 h-2 bg-[#2d5a27]"></div>
             <span class="text-[9px] text-slate-500 font-bold uppercase"
-                >Clientes Afectados (Acumulado)</span
+                >{t($language, "chart.friction.badge")}</span
             >
         </div>
     </div>
@@ -104,8 +108,7 @@
     </div>
 
     <p class="text-[9px] text-slate-600 italic">
-        * En el sur, la caída de árboles sobre líneas anula la inversión
-        macro-técnica.
+        {t($language, "chart.friction.note")}
     </p>
 </div>
 

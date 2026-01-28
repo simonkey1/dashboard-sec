@@ -1,6 +1,7 @@
 import { supabase } from '$lib/supabase';
 import type { PageLoad } from './$types';
-import reportContent from '$lib/content/technical_report.md?raw';
+import reportContentEs from '../../../docs/technical_chronicle.es.md?raw';
+import reportContentEn from '../../../docs/technical_chronicle.en.md?raw';
 
 export const load: PageLoad = async () => {
     const { data: stats, error } = await supabase
@@ -8,7 +9,7 @@ export const load: PageLoad = async () => {
         .select('*');
 
     if (error) {
-        return { stats: {}, reportContent };
+        return { stats: {}, reportContentEs, reportContentEn };
     }
 
     const statsMap = stats.reduce((acc, curr) => {
@@ -18,6 +19,7 @@ export const load: PageLoad = async () => {
 
     return {
         stats: statsMap,
-        reportContent
+        reportContentEs,
+        reportContentEn
     };
 };

@@ -79,7 +79,7 @@ En segundo lugar, seleccionamos cuatro estudios de caso no por su monto, sino po
 ### 3.1 La Paradoja de Coquimbo (El Gigante Dormido)
 La línea Cardones-Polpaico (**Sistema de Transmisión Nacional, 500 kV**) fue celebrada como la columna vertebral energética de Chile, conectando los centros de **Generación** del norte con la demanda central. Sin embargo, durante tres años (2019-2021), los habitantes de Coquimbo vivieron una paradoja: mientras la "macro-carretera" de energía fluía a máxima capacidad, el suministro en la red de **Distribución** local seguía fallando.
 
-![Figura 3: Caso Coquimbo](figures/figura3_coquimbo.png)
+![Figura 3: Caso Coquimbo](/figura3_coquimbo.png)
 *Figura 3: Persistencia de fallas en Coquimbo post-interconexión (Fuente: Elaboración propia)*
 
 **Interpretación de la Figura 3**: El gráfico muestra la evolución diaria de clientes afectados (eje Y). La **línea ámbar** marca los hogares sin luz y la **franja sombreada** el periodo de inversión.
@@ -89,7 +89,7 @@ Aunque el evento sísmico terminó, el **daño estructural persistió en el tiem
 ### 3.2 La Cirugía del Desierto (REDENOR)
 En Arica, el caso es opuesto. La inversión en REDENOR (**Transmisión Zonal/Alta Tensión, 110/220 kV**) actuó como una intervención quirúrgica efectiva.
 
-![Figura 4: Caso Arica](figures/figura4_arica.png)
+![Figura 4: Caso Arica](/figura4_arica.png)
 *Figura 4: Impacto de la redondancia en Arica (Fuente: Elaboración propia)*
 
 **Interpretación de la Figura 4**: Este gráfico de barras compara el volumen total de afectación año a año. Se observa un **quiebre estructural** claro: las barras altas de los años previos a la inversión colapsan a niveles mínimos tras el cierre del anillo de transmisión (2020). Aquí la redundancia técnica sí eliminó la vulnerabilidad, validando la tesis de que en topologías simples (desierto), la inversión física tiene un retorno inmediato.
@@ -97,7 +97,7 @@ En Arica, el caso es opuesto. La inversión en REDENOR (**Transmisión Zonal/Alt
 ### 3.3 La Furia del Sur (Pichirropulli)
 En la región de Los Lagos, la inversión chocó contra un muro verde. A pesar de los refuerzos en **Subestaciones de Transmisión** como Pichirropulli (**220 kV**), los índices de falla en los alimentadores de **Distribución** (**Media Tensión**) que atraviesan zonas forestales apenas mejoraron. La energía llega con robustez a la zona, pero falla en el tramo final hacia los hogares.
 
-![Figura 5: Ranking Empresas](figures/figura5_companies.png)
+![Figura 5: Ranking Empresas](/figura5_companies.png)
 *Figura 5: Empresas con mayor afectación de clientes (Fuente: Elaboración propia)*
 
 **El Factor Vegetación**: Como se observa en el ranking (Figura 5), las empresas con mayor afectación operan en zonas de alta densidad forestal. La normativa chilena (Norma Técnica de Calidad de Servicio, CNE, 2020) establece franjas de seguridad estrictas, pero la realidad territorial muestra una fricción constante entre el tendido eléctrico y las plantaciones forestales exóticas. La caída de árboles sobre líneas sigue siendo la causa principal de fallas masivas en el sur, sugiriendo que "el problema no es el cable, es el árbol" (y la planificación territorial que permite su coexistencia).

@@ -41,7 +41,7 @@
     <div class="flex items-center justify-between">
         <a href="/research#coquimbo" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-all block border-b border-transparent group-hover:border-amber-alert/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-white group-hover:text-amber-alert transition-all block border-b border-transparent group-hover:border-amber-alert/30 w-fit pb-1"
             >
                 {t($language, "chart.coquimbo.title")}
                 <ExternalLink
@@ -50,9 +50,23 @@
                 />
             </h2>
         </a>
-        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+        <div class="text-[10px] text-slate-200 font-mono mt-1 hidden md:block">
             {t($language, "chart.coquimbo.desc")}
-        </p>
+            <!-- Hub Tooltip Trigger -->
+            <span class="group/hub relative inline-block ml-1 cursor-help">
+                <span class="border-b border-dashed border-slate-200">(?)</span>
+                <div
+                    class="absolute left-1/2 -translate-x-1/2 mt-2 w-48 bg-slate-900 border border-slate-700 p-2 rounded-lg z-50 opacity-0 group-hover/hub:opacity-100 transition-opacity pointer-events-none group-hover/hub:pointer-events-auto shadow-xl"
+                >
+                    <p class="text-[9px] text-slate-300 leading-tight">
+                        <strong class="text-amber-alert block mb-1"
+                            >{t($language, "glossary.hub")}:</strong
+                        >
+                        {t($language, "glossary.hub.desc")}
+                    </p>
+                </div>
+            </span>
+        </div>
         <div class="flex items-center gap-2 group relative">
             <span class="w-2 h-2 rounded-full bg-amber-alert"></span>
             <span
@@ -115,14 +129,14 @@
                         placement="left"
                         grid={{ class: "stroke-white/5" }}
                         ticks={isMobile ? 3 : 5}
-                        class="text-[10px] font-mono fill-white opacity-80"
+                        class="text-[10px] font-mono fill-white opacity-100"
                     />
                     <Axis
                         placement="bottom"
                         grid={{ class: "stroke-white/5" }}
                         ticks={isMobile ? 3 : 5}
                         format={(d: Date) => format(d, "yyyy")}
-                        class="text-[10px] font-mono fill-white opacity-80"
+                        class="text-[10px] font-mono fill-white opacity-100"
                     />
 
                     <!-- Yellow Overlay (2019-2020 Investment Period) -->

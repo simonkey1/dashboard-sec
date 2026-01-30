@@ -67,7 +67,7 @@
     <div class="flex items-center justify-between border-b border-white/5 pb-4">
         <a href="/research#cicatrices" class="group block cursor-pointer">
             <h3
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all block w-fit"
+                class="text-xs font-bold uppercase tracking-widest text-white group-hover:text-electric-cyan transition-all block w-fit"
             >
                 {t($language, "chart.map.title")} (2017-2025)
                 <ExternalLink
@@ -76,17 +76,31 @@
                 />
             </h3>
         </a>
-        <span class="text-[10px] text-slate-600 font-mono uppercase"
-            >{t($language, "chart.map.badge")}</span
-        >
+        <div class="flex items-center gap-2 group relative">
+            <span
+                class="text-[10px] text-white font-mono uppercase cursor-help border-b border-dashed border-white/50"
+                >{t($language, "chart.map.badge")}</span
+            >
+            <!-- Map Description Tooltip -->
+            <div
+                class="absolute right-0 top-6 w-64 bg-slate-900 border border-slate-700 p-3 rounded-lg z-50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto shadow-xl"
+            >
+                <p class="text-[10px] text-slate-300 leading-relaxed">
+                    <strong class="text-white"
+                        >{t($language, "chart.map.help")}:</strong
+                    >
+                    {t($language, "chart.map.help.desc")}
+                </p>
+            </div>
+        </div>
     </div>
 
-    <!-- Responsive Grid - Centered items -->
-    <div class="flex flex-wrap justify-center gap-4">
+    <!-- Responsive Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {#each failurePoints as point}
             {@const Icon = point.icon}
             <div
-                class="group relative p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col justify-between h-full w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] min-w-[300px]"
+                class="group relative p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col justify-between h-full"
             >
                 <!-- Header -->
                 <div class="flex items-start justify-between mb-4">
@@ -99,7 +113,7 @@
                         </span>
                     </div>
                     <span
-                        class="text-[9px] font-mono py-1 px-2 rounded bg-black/30 text-slate-400 border border-white/5"
+                        class="text-[9px] font-mono py-1 px-2 rounded bg-black/30 text-white border border-white/5"
                     >
                         {point.stats}
                     </span>
@@ -107,7 +121,7 @@
 
                 <!-- Body -->
                 <p
-                    class="text-xs text-slate-400 font-mono leading-relaxed group-hover:text-slate-200 transition-colors"
+                    class="text-xs text-slate-200 font-mono leading-relaxed group-hover:text-white transition-colors"
                 >
                     {point.desc}
                 </p>

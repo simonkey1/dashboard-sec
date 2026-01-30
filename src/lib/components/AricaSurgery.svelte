@@ -76,7 +76,7 @@
     <div class="flex items-center justify-between">
         <a href="/research#arica" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-white group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 {t($language, "chart.arica.title")}
                 <ExternalLink
@@ -85,153 +85,169 @@
                 />
             </h2>
         </a>
-        <div class="flex items-center gap-2">
-            <span class="text-[10px] text-electric-cyan font-mono uppercase"
-                >Éxito Técnico</span
+        <div class="flex items-center gap-2 group relative">
+            <span
+                class="text-[10px] text-electric-cyan font-mono uppercase cursor-help border-b border-dashed border-electric-cyan/50"
+                >{t($language, "chart.arica.badge")}</span
             >
+            <!-- Arica Badge Tooltip -->
+            <div
+                class="absolute right-0 top-6 w-64 bg-slate-900 border border-slate-700 p-3 rounded-lg z-50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto shadow-xl"
+            >
+                <p class="text-[10px] text-slate-300 leading-relaxed">
+                    <strong class="text-electric-cyan"
+                        >{t($language, "chart.arica.badge")}:</strong
+                    >
+                    {t($language, "chart.arica.badge.desc")}
+                </p>
+            </div>
         </div>
     </div>
 
     <!-- Manual SVG Chart (Standardized Vertical Bars) -->
     <div
-        class="flex-1 min-h-[250px] relative rounded-xl bg-rich-black p-4 group"
+        class="flex-1 min-h-[250px] relative rounded-xl bg-rich-black p-4 group overflow-hidden"
     >
-        {#if chartData.length > 0}
-            <svg
-                class="w-full h-full"
-                viewBox="0 0 1000 {height}"
-                preserveAspectRatio="none"
-            >
-                <!-- Grid Y -->
-                {#each yTicks as tick}
+        <div class="w-full h-full overflow-x-auto custom-scrollbar">
+            {#if chartData.length > 0}
+                <svg
+                    class="h-full {isMobile ? 'min-w-[500px]' : 'w-full'}"
+                    viewBox="0 0 1000 {height}"
+                >
+                    <!-- Grid Y -->
+                    {#each yTicks as tick}
+                        <line
+                            x1={padding.left}
+                            x2={1000 - padding.right}
+                            y1={y(tick)}
+                            y2={y(tick)}
+                            stroke="rgba(255,255,255,0.05)"
+                            stroke-width="1"
+                        />
+                        <text
+                            x={padding.left - 5}
+                            y={y(tick) + 3}
+                            text-anchor="end"
+                            class="fill-white text-[10px] font-mono font-bold"
+                        >
+                            {tick >= 1000000
+                                ? (tick / 1000000).toFixed(1) + "M"
+                                : tick >= 1000
+                                  ? (tick / 1000).toFixed(0) + "K"
+                                  : tick}
+                        </text>
+                    {/each}
+
+                    <!-- Bars -->
+                    {#each chartData as d}
+                        <!-- svelte-ignore a11y_mouse_events_have_key_events -->
+                        <rect
+                            x={x(d.year.toString())}
+                            y={y(d.value)}
+                            width={x.bandwidth()}
+                            height={y(0) - y(d.value)}
+                            fill="var(--color-electric-cyan)"
+                            class="hover:opacity-80 transition-opacity cursor-crosshair"
+                            rx="2"
+                            onmouseover={() => (hoveredData = d)}
+                            onmouseout={() => (hoveredData = null)}
+                            role="graphics-symbol"
+                            aria-label="Barra de datos para el año {d.year} con un valor de {d.value}"
+                        />
+
+                        <!-- Chart Labels: Show only on Desktop or if hovered -->
+                        {#if !isMobile && (d.year === 2020 || d.year === 2025 || d.value === Math.max(...chartData.map((d) => d.value)))}
+                            <text
+                                x={(x(d.year.toString()) || 0) +
+                                    x.bandwidth() / 2}
+                                y={y(d.value) - 8}
+                                text-anchor="middle"
+                                class="fill-white text-[12px] font-bold font-sans tracking-tight"
+                                style="pointer-events: none;"
+                            >
+                                {d.value >= 1000000
+                                    ? (d.value / 1000000).toFixed(1) + "M"
+                                    : d.value >= 1000
+                                      ? (d.value / 1000).toFixed(0) + "K"
+                                      : d.value}
+                            </text>
+                        {/if}
+
+                        <!-- X Axis Labels -->
+                        {#if xTicks.includes(d.year.toString())}
+                            <text
+                                x={(x(d.year.toString()) || 0) +
+                                    x.bandwidth() / 2}
+                                y={height - 5}
+                                text-anchor="middle"
+                                class="fill-white text-[11px] font-mono font-bold"
+                            >
+                                {d.year}
+                            </text>
+                        {/if}
+                    {/each}
+                    <!-- Year 2020 Annotation -->
                     <line
-                        x1={padding.left}
-                        x2={1000 - padding.right}
-                        y1={y(tick)}
-                        y2={y(tick)}
-                        stroke="rgba(255,255,255,0.05)"
-                        stroke-width="1"
+                        x1={x("2020") || 0}
+                        x2={x("2020") || 0}
+                        y1={padding.top}
+                        y2={height - padding.bottom}
+                        stroke="var(--color-amber-alert)"
+                        stroke-width="2"
+                        stroke-dasharray="4,4"
+                        class="opacity-50"
                     />
                     <text
-                        x={padding.left - 5}
-                        y={y(tick) + 3}
-                        text-anchor="end"
-                        class="fill-slate-300 text-[10px] font-mono font-bold"
+                        x={(x("2020") || 0) + 5}
+                        y={padding.top + 10}
+                        class="fill-amber-alert text-[9px] font-mono font-bold uppercase"
                     >
-                        {tick >= 1000000
-                            ? (tick / 1000000).toFixed(1) + "M"
-                            : tick >= 1000
-                              ? (tick / 1000).toFixed(0) + "K"
-                              : tick}
+                        Inicio REDENOR
                     </text>
-                {/each}
+                    <!-- Y Axis Label -->
+                    <text
+                        transform="rotate(-90)"
+                        x={-height / 2}
+                        y={12}
+                        text-anchor="middle"
+                        class="fill-white text-[9px] font-mono tracking-widest uppercase"
+                    >
+                        Total Clientes Afectados
+                    </text>
+                </svg>
 
-                <!-- Bars -->
-                {#each chartData as d}
-                    <!-- svelte-ignore a11y_mouse_events_have_key_events -->
-                    <rect
-                        x={x(d.year.toString())}
-                        y={y(d.value)}
-                        width={x.bandwidth()}
-                        height={y(0) - y(d.value)}
-                        fill="var(--color-electric-cyan)"
-                        class="hover:opacity-80 transition-opacity cursor-crosshair"
-                        rx="2"
-                        onmouseover={() => (hoveredData = d)}
-                        onmouseout={() => (hoveredData = null)}
-                        role="graphics-symbol"
-                        aria-label="Barra de datos para el año {d.year} con un valor de {d.value}"
-                    />
-
-                    <!-- Chart Labels: Show only on Desktop or if hovered -->
-                    {#if !isMobile && (d.year === 2020 || d.year === 2025 || d.value === Math.max(...chartData.map((d) => d.value)))}
-                        <text
-                            x={(x(d.year.toString()) || 0) + x.bandwidth() / 2}
-                            y={y(d.value) - 8}
-                            text-anchor="middle"
-                            class="fill-white text-[12px] font-bold font-sans tracking-tight"
-                            style="pointer-events: none;"
+                <!-- Custom Tooltip -->
+                {#if hoveredData}
+                    <div
+                        class="absolute top-4 right-4 bg-black/90 border border-electric-cyan/30 p-3 rounded-xl shadow-[0_0_20px_rgba(0,255,255,0.2)] backdrop-blur-xl pointer-events-none"
+                    >
+                        <div
+                            class="text-slate-400 text-[10px] font-mono uppercase mb-1"
                         >
-                            {d.value >= 1000000
-                                ? (d.value / 1000000).toFixed(1) + "M"
-                                : d.value >= 1000
-                                  ? (d.value / 1000).toFixed(0) + "K"
-                                  : d.value}
-                        </text>
-                    {/if}
-
-                    <!-- X Axis Labels -->
-                    {#if xTicks.includes(d.year.toString())}
-                        <text
-                            x={(x(d.year.toString()) || 0) + x.bandwidth() / 2}
-                            y={height - 5}
-                            text-anchor="middle"
-                            class="fill-slate-300 text-[11px] font-mono font-bold"
+                            {t($language, "chart.tooltip.year")}
+                            {hoveredData.year}
+                        </div>
+                        <div
+                            class="text-electric-cyan font-mono text-xl font-black"
                         >
-                            {d.year}
-                        </text>
-                    {/if}
-                {/each}
-                <!-- Year 2020 Annotation -->
-                <line
-                    x1={x("2020") || 0}
-                    x2={x("2020") || 0}
-                    y1={padding.top}
-                    y2={height - padding.bottom}
-                    stroke="var(--color-amber-alert)"
-                    stroke-width="2"
-                    stroke-dasharray="4,4"
-                    class="opacity-50"
-                />
-                <text
-                    x={(x("2020") || 0) + 5}
-                    y={padding.top + 10}
-                    class="fill-amber-alert text-[9px] font-mono font-bold uppercase"
-                >
-                    Inicio REDENOR
-                </text>
-                <!-- Y Axis Label -->
-                <text
-                    transform="rotate(-90)"
-                    x={-height / 2}
-                    y={12}
-                    text-anchor="middle"
-                    class="fill-slate-500 text-[9px] font-mono tracking-widest uppercase"
-                >
-                    Total Clientes Afectados
-                </text>
-            </svg>
-
-            <!-- Custom Tooltip -->
-            {#if hoveredData}
+                            {hoveredData.value.toLocaleString()}
+                            <span
+                                class="text-[10px] text-white/50 font-normal ml-1"
+                                >{t($language, "chart.tooltip.affected")}</span
+                            >
+                        </div>
+                    </div>
+                {/if}
+            {:else}
                 <div
-                    class="absolute top-4 right-4 bg-black/90 border border-electric-cyan/30 p-3 rounded-xl shadow-[0_0_20px_rgba(0,255,255,0.2)] backdrop-blur-xl pointer-events-none"
+                    class="h-full flex flex-col items-center justify-center text-slate-400 text-xs italic font-mono space-y-2"
                 >
                     <div
-                        class="text-slate-400 text-[10px] font-mono uppercase mb-1"
-                    >
-                        {t($language, "chart.tooltip.year")}
-                        {hoveredData.year}
-                    </div>
-                    <div
-                        class="text-electric-cyan font-mono text-xl font-black"
-                    >
-                        {hoveredData.value.toLocaleString()}
-                        <span class="text-[10px] text-white/50 font-normal ml-1"
-                            >{t($language, "chart.tooltip.affected")}</span
-                        >
-                    </div>
+                        class="w-8 h-8 border-2 border-electric-cyan border-t-transparent rounded-full animate-spin"
+                    ></div>
+                    <span>{t($language, "common.loading")} (ARICA)...</span>
                 </div>
             {/if}
-        {:else}
-            <div
-                class="h-full flex flex-col items-center justify-center text-slate-400 text-xs italic font-mono space-y-2"
-            >
-                <div
-                    class="w-8 h-8 border-2 border-electric-cyan border-t-transparent rounded-full animate-spin"
-                ></div>
-                <span>{t($language, "common.loading")} (ARICA)...</span>
-            </div>
-        {/if}
+        </div>
     </div>
 </div>

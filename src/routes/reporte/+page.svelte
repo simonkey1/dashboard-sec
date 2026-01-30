@@ -38,9 +38,9 @@
         };
 
         processed = processed.replace(
-            /> \[!(.*?)\]\s*\n>\s*(.*?)(?=\n\n|$)/gs,
+            /(?:^|\n)>\s*\[!(.*?)\]\s*[\r\n]+>\s*(.*?)(?=\n\s*\n|$)/gs,
             (match, type, content) => {
-                const upperType = type.toUpperCase();
+                const upperType = type.trim().toUpperCase();
                 const style = alertMap[upperType] || alertMap["NOTE"];
                 const label = iconMap[upperType] || iconMap["NOTE"];
 
@@ -50,9 +50,10 @@
                         /\*\*(.*?)\*\*/g,
                         '<strong class="text-white">$1</strong>',
                     )
+                    .replace(/\*(.*?)\*/g, '<em class="text-slate-300">$1</em>')
                     .replace(
-                        /\*(.*?)\*/g,
-                        '<em class="text-slate-300">$1</em>',
+                        /\[(.*?)\]\((.*?)\)/g,
+                        '<a href="$2" target="_blank" class="text-emerald-400 hover:underline hover:text-emerald-300 transition-colors">$1</a>',
                     );
 
                 return `<div class="${style} border-l-4 p-4 my-6 rounded-r-lg"><strong class="block mb-1 font-bold">${label}</strong><div class="text-slate-300">${formatted}</div></div>`;

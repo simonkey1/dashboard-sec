@@ -25,6 +25,8 @@ const dictionary: Record<Language, Translations> = {
         'nav.research': 'Investigación',
         'nav.report': 'Reporte Técnico',
         'nav.dashboard': 'Dashboard',
+        'nav.repo.etl': 'Repo ETL (Pipeline)',
+        'nav.repo.frontend': 'Repo Frontend (Dashboard)',
 
         // Cards
         'card.roi_social': 'ROI de Inversión',
@@ -100,6 +102,16 @@ const dictionary: Record<Language, Translations> = {
         'map.point.coquimbo.desc': 'Paradoja: Obra 500kV no impactó la calidad local por 3 años.',
         'map.point.metro.desc': 'Nevazón 2017 y Viento 2024 exponen la fragilidad del tendido aéreo.',
         'map.point.lagos.desc': 'Fricción constante entre tendido eléctrico y monocultivo forestal.',
+
+        // Glossary / Extra Tooltips
+        'glossary.hub': 'Hub Renovable',
+        'glossary.hub.desc': 'Región que concentra la generación de energía solar/eólica pero carece de líneas de transmisión suficientes para exportarla.',
+        'chart.friction.legend.green': 'Zona Forestal (Sur)',
+        'chart.friction.legend.gray': 'Resto de Chile',
+        'chart.arica.badge': 'Éxito Técnico',
+        'chart.arica.badge.desc': 'Tras la intervención de 2024, las fallas se redujeron en un 90%, demostrando que la inversión dirigida funciona.',
+        'chart.map.help': '¿Qué son las Cicatrices?',
+        'chart.map.help.desc': 'Puntos geográficos donde la infraestructura ha fallado repetidamente debido a factores climáticos o falta de inversión.',
     },
     en: {
         // Hero
@@ -116,6 +128,8 @@ const dictionary: Record<Language, Translations> = {
         'nav.research': 'Research',
         'nav.report': 'Technical Report',
         'nav.dashboard': 'Dashboard',
+        'nav.repo.etl': 'ETL Repo (Pipeline)',
+        'nav.repo.frontend': 'Frontend Repo (Dashboard)',
 
         // Cards
         'card.roi_social': 'Investment ROI',
@@ -190,6 +204,16 @@ const dictionary: Record<Language, Translations> = {
         'map.point.coquimbo.desc': 'Paradox: 500kV work did not impact local quality for 3 years.',
         'map.point.metro.desc': '2017 Snowstorm and 2024 Windstorm expose overhead line fragility.',
         'map.point.lagos.desc': 'Constant friction between power lines and forestry monoculture.',
+
+        // Glossary / Extra Tooltips
+        'glossary.hub': 'Renewable Hub',
+        'glossary.hub.desc': 'Region that concentrates solar/wind generation but lacks sufficient transmission lines to export it.',
+        'chart.friction.legend.green': 'Forest Zone (South)',
+        'chart.friction.legend.gray': 'Rest of Chile',
+        'chart.arica.badge': 'Technical Success',
+        'chart.arica.badge.desc': 'After the 2024 intervention, failures dropped by 90%, proving that targeted investment works.',
+        'chart.map.help': 'What are Scars?',
+        'chart.map.help.desc': 'Geographic points where infrastructure has repeatedly failed due to climate factors or lack of investment.',
     }
 };
 

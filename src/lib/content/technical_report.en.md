@@ -139,7 +139,7 @@ Our "Affected Customers" metric for the event (identified by `hash_id`) is defin
 ---
 
 > [!TIP]
-> All code for this infrastructure is available in [`scripts/etl/`](https://github.com/simonkey1/SEC/tree/master/scripts/etl) and [`scripts/analysis/`](https://github.com/simonkey1/SEC/tree/master/scripts/analysis).
+> All code for this infrastructure is available in [scripts/etl/](https://github.com/simonkey1/SEC/tree/master/scripts/etl) and [scripts/analysis/](https://github.com/simonkey1/SEC/tree/master/scripts/analysis).
 
 ---
 

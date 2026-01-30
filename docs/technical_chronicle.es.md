@@ -127,4 +127,4 @@ Nuestra métrica de "Clientes Afectados" para el evento (identificado por `hash_
 ---
 
 > [!TIP]
-> Todo el código de esta infraestructura está disponible en `scripts/etl/` y `scripts/analysis/`.
+> Todo el código de esta infraestructura está disponible en [scripts/etl/](https://github.com/simonkey1/SEC/tree/master/scripts/etl) y [scripts/analysis/](https://github.com/simonkey1/SEC/tree/master/scripts/analysis).

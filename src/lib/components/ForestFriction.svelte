@@ -30,7 +30,7 @@
     <div class="flex items-center justify-between">
         <a href="/research#muro-verde" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-emerald-400 transition-all block border-b border-transparent group-hover:border-emerald-400/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-white group-hover:text-emerald-400 transition-all block border-b border-transparent group-hover:border-emerald-400/30 w-fit pb-1"
             >
                 {t($language, "chart.friction.title")}
                 <ExternalLink
@@ -39,14 +39,40 @@
                 />
             </h2>
         </a>
-        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+        <p class="text-[10px] text-slate-200 font-mono mt-1 hidden md:block">
             {t($language, "chart.friction.desc")}
         </p>
-        <div class="flex items-center gap-1">
-            <div class="w-2 h-2 bg-[#2d5a27]"></div>
-            <span class="text-[9px] text-slate-500 font-bold uppercase"
-                >{t($language, "chart.friction.badge")}</span
-            >
+        <div class="flex items-center gap-3">
+            <!-- Legend Green -->
+            <div class="flex items-center gap-1 group relative">
+                <div class="w-2 h-2 bg-emerald-500 rounded-sm"></div>
+                <span
+                    class="text-[9px] text-emerald-500 font-bold uppercase cursor-help border-b border-dashed border-emerald-500/30"
+                    >Sur</span
+                >
+                <div
+                    class="absolute right-0 top-4 w-32 bg-slate-900 border border-slate-700 p-2 rounded-lg z-50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto shadow-xl"
+                >
+                    <p class="text-[9px] text-slate-300">
+                        {t($language, "chart.friction.legend.green")}
+                    </p>
+                </div>
+            </div>
+            <!-- Legend Gray -->
+            <div class="flex items-center gap-1 group relative">
+                <div class="w-2 h-2 bg-white/40 rounded-sm"></div>
+                <span
+                    class="text-[9px] text-white font-bold uppercase cursor-help border-b border-dashed border-white/30"
+                    >Otros</span
+                >
+                <div
+                    class="absolute right-0 top-4 w-32 bg-slate-900 border border-slate-700 p-2 rounded-lg z-50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto shadow-xl"
+                >
+                    <p class="text-[9px] text-slate-300">
+                        {t($language, "chart.friction.legend.gray")}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -59,7 +85,7 @@
                 <div
                     class="flex items-center gap-3 p-2 rounded border border-white/5 bg-rich-black group hover:border-white/10 transition-colors"
                 >
-                    <div class="text-[10px] font-mono text-slate-600 w-4">
+                    <div class="text-[10px] font-mono text-white w-4">
                         #{i + 1}
                     </div>
                     <div class="flex-1">
@@ -107,7 +133,7 @@
         </div>
     </div>
 
-    <p class="text-[9px] text-slate-600 italic">
+    <p class="text-[9px] text-slate-300 italic">
         {t($language, "chart.friction.note")}
     </p>
 </div>

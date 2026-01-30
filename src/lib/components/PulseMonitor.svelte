@@ -84,7 +84,7 @@
     <div class="flex items-center justify-between">
         <a href="/research#cronologia" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-white group-hover:text-electric-cyan transition-all block border-b border-transparent group-hover:border-electric-cyan/30 w-fit pb-1"
             >
                 {t($language, "card.time_series")} (2017-2025)
                 <ExternalLink
@@ -93,11 +93,11 @@
                 />
             </h2>
         </a>
-        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+        <p class="text-[10px] text-slate-200 font-mono mt-1 hidden md:block">
             {t($language, "chart.monitor.desc")}
         </p>
         <div class="flex items-center gap-2">
-            <span class="text-[10px] text-slate-500 uppercase tracking-tighter"
+            <span class="text-[10px] text-white uppercase tracking-tighter"
                 >{t($language, "chart.badge.validated")}</span
             >
         </div>
@@ -105,134 +105,148 @@
 
     <!-- Manual SVG Implementation -->
     <div
-        class="flex-1 min-h-[250px] relative rounded-xl bg-rich-black p-2 md:p-4 group"
+        class="flex-1 min-h-[250px] relative rounded-xl bg-rich-black p-2 md:p-4 group overflow-hidden"
     >
-        {#if chartData.length > 0}
-            <svg
-                class="w-full h-full"
-                viewBox="0 0 1000 {height}"
-                preserveAspectRatio="none"
-            >
-                <!-- Grid -->
-                {#each yTicks as tick}
-                    <line
-                        x1={padding.left}
-                        x2={1000 - padding.right}
-                        y1={y(tick)}
-                        y2={y(tick)}
-                        stroke="rgba(255,255,255,0.05)"
-                        stroke-width="1"
-                    />
-                    <text
-                        x={padding.left - 5}
-                        y={y(tick) + 3}
-                        text-anchor="end"
-                        class="fill-slate-300 text-[10px] font-mono font-bold"
-                    >
-                        {i18nText(tick)}
-                    </text>
-                {/each}
-
-                <!-- Bars -->
-                {#each chartData as d}
-                    <!-- svelte-ignore a11y_mouse_events_have_key_events -->
-                    <rect
-                        x={x(d.year)}
-                        y={y(d.value)}
-                        width={x.bandwidth()}
-                        height={y(0) - y(d.value)}
-                        fill="var(--color-electric-cyan)"
-                        rx="2"
-                        class="hover:opacity-80 transition-opacity cursor-crosshair"
-                        onmouseover={() => (hoveredData = d)}
-                        onmouseout={() => (hoveredData = null)}
-                        role="graphics-symbol"
-                        aria-label="Barra de datos para el año {d.year} con un valor de {d.value}"
-                    />
-
-                    <!-- Chart Labels: Show only on Desktop or if hovered -->
-                    {#if !isMobile && (d.year === "2017" || d.year === "2024" || d.year === "2025" || d.value === Math.max(...chartData.map((d) => d.value)))}
-                        <text
-                            x={(x(d.year) || 0) + x.bandwidth() / 2}
-                            y={y(d.value) - 8}
-                            text-anchor="middle"
-                            class="fill-white text-[12px] font-bold font-sans tracking-tight"
-                            style="pointer-events: none;"
-                        >
-                            {i18nText(d.value)}
-                        </text>
-                    {/if}
-
-                    <!-- X Axis Label: Use filtered ticks -->
-                    {#if xTicks.includes(d.year)}
-                        <text
-                            x={(x(d.year) || 0) + x.bandwidth() / 2}
-                            y={height - 5}
-                            text-anchor="middle"
-                            class="fill-slate-400 text-[11px] font-mono font-bold"
-                        >
-                            {d.year}
-                        </text>
-                    {/if}
-                {/each}
-                <!-- Annotations -->
-                <g
-                    transform="translate({(x('2017') || 0) +
-                        x.bandwidth() / 2}, {y(5000000)})"
-                    class="pointer-events-none"
+        <div class="w-full h-full overflow-x-auto custom-scrollbar">
+            {#if chartData.length > 0}
+                <svg
+                    class="h-full {isMobile ? 'min-w-[600px]' : 'w-full'}"
+                    viewBox="0 0 1000 {height}"
                 >
-                    <text
-                        class="fill-white text-[9px] font-bold uppercase tracking-tight"
-                        text-anchor="middle"
-                        y="-35">{t($language, "chart.annotations.snow")}</text
-                    >
-                    <line y1="-30" y2="-22" stroke="white" stroke-width="1.5" />
-                    <circle cy="-22" r="1.5" fill="white" />
-                </g>
+                    <!-- Grid -->
+                    {#each yTicks as tick}
+                        <line
+                            x1={padding.left}
+                            x2={1000 - padding.right}
+                            y1={y(tick)}
+                            y2={y(tick)}
+                            stroke="rgba(255,255,255,0.05)"
+                            stroke-width="1"
+                        />
+                        <text
+                            x={padding.left - 5}
+                            y={y(tick) + 3}
+                            text-anchor="end"
+                            class="fill-white text-[10px] font-mono font-bold"
+                        >
+                            {i18nText(tick)}
+                        </text>
+                    {/each}
 
-                <g
-                    transform="translate({(x('2024') || 0) +
-                        x.bandwidth() / 2}, {y(3000000)})"
-                >
-                    <text
-                        class="fill-white text-[9px] font-bold uppercase tracking-tight"
-                        text-anchor="middle"
-                        y="-25">{t($language, "chart.annotations.wind")}</text
-                    >
-                    <line y1="-20" y2="-12" stroke="white" stroke-width="1.5" />
-                    <circle cy="-12" r="1.5" fill="white" />
-                </g>
-            </svg>
+                    <!-- Bars -->
+                    {#each chartData as d}
+                        <!-- svelte-ignore a11y_mouse_events_have_key_events -->
+                        <rect
+                            x={x(d.year)}
+                            y={y(d.value)}
+                            width={x.bandwidth()}
+                            height={y(0) - y(d.value)}
+                            fill="var(--color-electric-cyan)"
+                            rx="2"
+                            class="hover:opacity-80 transition-opacity cursor-crosshair"
+                            onmouseover={() => (hoveredData = d)}
+                            onmouseout={() => (hoveredData = null)}
+                            role="graphics-symbol"
+                            aria-label="Barra de datos para el año {d.year} con un valor de {d.value}"
+                        />
 
-            <!-- Custom Tooltip -->
-            {#if hoveredData}
+                        <!-- Chart Labels: Show only on Desktop or if hovered -->
+                        {#if !isMobile && (d.year === "2017" || d.year === "2024" || d.year === "2025" || d.value === Math.max(...chartData.map((d) => d.value)))}
+                            <text
+                                x={(x(d.year) || 0) + x.bandwidth() / 2}
+                                y={y(d.value) - 8}
+                                text-anchor="middle"
+                                class="fill-white text-[12px] font-bold font-sans tracking-tight"
+                                style="pointer-events: none;"
+                            >
+                                {i18nText(d.value)}
+                            </text>
+                        {/if}
+
+                        <!-- X Axis Label: Use filtered ticks -->
+                        {#if xTicks.includes(d.year)}
+                            <text
+                                x={(x(d.year) || 0) + x.bandwidth() / 2}
+                                y={height - 5}
+                                text-anchor="middle"
+                                class="fill-white text-[11px] font-mono font-bold"
+                            >
+                                {d.year}
+                            </text>
+                        {/if}
+                    {/each}
+                    <!-- Annotations -->
+                    <g
+                        transform="translate({(x('2017') || 0) +
+                            x.bandwidth() / 2}, {y(5000000)})"
+                        class="pointer-events-none"
+                    >
+                        <text
+                            class="fill-white text-[9px] font-bold uppercase tracking-tight"
+                            text-anchor="middle"
+                            y="-35"
+                            >{t($language, "chart.annotations.snow")}</text
+                        >
+                        <line
+                            y1="-30"
+                            y2="-22"
+                            stroke="white"
+                            stroke-width="1.5"
+                        />
+                        <circle cy="-22" r="1.5" fill="white" />
+                    </g>
+
+                    <g
+                        transform="translate({(x('2024') || 0) +
+                            x.bandwidth() / 2}, {y(3000000)})"
+                    >
+                        <text
+                            class="fill-white text-[9px] font-bold uppercase tracking-tight"
+                            text-anchor="middle"
+                            y="-25"
+                            >{t($language, "chart.annotations.wind")}</text
+                        >
+                        <line
+                            y1="-20"
+                            y2="-12"
+                            stroke="white"
+                            stroke-width="1.5"
+                        />
+                        <circle cy="-12" r="1.5" fill="white" />
+                    </g>
+                </svg>
+
+                <!-- Custom Tooltip -->
+                {#if hoveredData}
+                    <div
+                        class="absolute top-4 right-4 bg-black/90 border border-cyan-500/30 p-3 rounded-xl shadow-[0_0_20px_rgba(0,255,255,0.2)] backdrop-blur-xl pointer-events-none"
+                    >
+                        <div
+                            class="text-slate-400 text-[10px] font-mono uppercase mb-1"
+                        >
+                            {t($language, "chart.tooltip.year")}
+                            {hoveredData.year}
+                        </div>
+                        <div
+                            class="text-electric-cyan font-mono text-xl font-black"
+                        >
+                            {hoveredData.value.toLocaleString()}
+                            <span
+                                class="text-[10px] text-white/50 font-normal ml-1"
+                                >{t($language, "chart.tooltip.affected")}</span
+                            >
+                        </div>
+                    </div>
+                {/if}
+            {:else}
                 <div
-                    class="absolute top-4 right-4 bg-black/90 border border-cyan-500/30 p-3 rounded-xl shadow-[0_0_20px_rgba(0,255,255,0.2)] backdrop-blur-xl pointer-events-none"
+                    class="h-full flex items-center justify-center text-slate-600 text-xs italic"
                 >
-                    <div
-                        class="text-slate-400 text-[10px] font-mono uppercase mb-1"
+                    <span
+                        >{t($language, "chart.loading")} (Data: {data.length})</span
                     >
-                        {t($language, "chart.tooltip.year")}
-                        {hoveredData.year}
-                    </div>
-                    <div
-                        class="text-electric-cyan font-mono text-xl font-black"
-                    >
-                        {hoveredData.value.toLocaleString()}
-                        <span class="text-[10px] text-white/50 font-normal ml-1"
-                            >{t($language, "chart.tooltip.affected")}</span
-                        >
-                    </div>
                 </div>
             {/if}
-        {:else}
-            <div
-                class="h-full flex items-center justify-center text-slate-600 text-xs italic"
-            >
-                <span
-                    >{t($language, "chart.loading")} (Data: {data.length})</span
-                >
-            </div>
-        {/if}
+        </div>
     </div>
 </div>

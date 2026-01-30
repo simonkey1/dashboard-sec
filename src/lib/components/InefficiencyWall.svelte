@@ -18,7 +18,7 @@
     <div class="flex items-center justify-between">
         <a href="/research#roi-social" class="group block cursor-pointer">
             <h2
-                class="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-amber-alert transition-all block border-b border-transparent group-hover:border-amber-alert/30 w-fit pb-1"
+                class="text-xs font-bold uppercase tracking-widest text-white group-hover:text-amber-alert transition-all block border-b border-transparent group-hover:border-amber-alert/30 w-fit pb-1"
             >
                 {t($language, "chart.roi.title")}
                 <ExternalLink
@@ -27,12 +27,12 @@
                 />
             </h2>
         </a>
-        <p class="text-[10px] text-slate-500 font-mono mt-1 hidden md:block">
+        <p class="text-[10px] text-slate-200 font-mono mt-1 hidden md:block">
             {t($language, "chart.roi.desc")}
         </p>
         <div class="flex flex-col items-end">
             <span
-                class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded cursor-help"
+                class="text-[10px] bg-slate-800 text-white px-2 py-0.5 rounded cursor-help"
                 title={t($language, "chart.roi.desc")}
                 >{t($language, "chart.roi.unit")}</span
             >
@@ -51,7 +51,7 @@
                 {#each chartData as d}
                     <div class="flex items-center gap-4 group">
                         <div
-                            class="w-24 text-[10px] font-bold text-slate-300 text-right uppercase tracking-tighter"
+                            class="w-24 text-[10px] font-bold text-white text-right uppercase tracking-tighter"
                         >
                             {d.nombre_region}
                         </div>

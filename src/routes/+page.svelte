@@ -113,7 +113,13 @@
                     ><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"
                     ></polyline></svg
                 >
-                {t($language, "about.insights")}
+                <a
+                    href="https://github.com/simonkey1/SEC/tree/master/scripts/analysis"
+                    target="_blank"
+                    class="hover:text-emerald-400 transition-colors hover:underline decoration-emerald-400/30 underline-offset-4"
+                >
+                    {t($language, "about.insights")}
+                </a>
             </h3>
             <ul class="space-y-3">
                 <li class="flex items-start gap-3">
@@ -156,7 +162,13 @@
                     ></polyline><polyline points="2 12 12 17 22 12"
                     ></polyline></svg
                 >
-                {t($language, "about.architecture")}
+                <a
+                    href="https://github.com/simonkey1/SEC/tree/master/scripts/etl"
+                    target="_blank"
+                    class="hover:text-cyan-400 transition-colors hover:underline decoration-cyan-400/30 underline-offset-4"
+                >
+                    {t($language, "about.architecture")}
+                </a>
             </h3>
             <ul class="space-y-3">
                 <li class="flex items-start gap-3">
